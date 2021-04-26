@@ -1,0 +1,11 @@
+@import 'variables';
+@import 'body';
+
+
+*{
+    background-color:$background;
+    .App{
+        color:$word;
+        
+    }
+}

@@ -1,30 +1,34 @@
 import React, {useState} from 'react';
 
-export default function BreakInterval(){
+export default function BreakInterval({setState, state}){
     const name = "Break Time";
-    const [breakInterval, setBreakInterval] = useState(5);
-
+    const {breakTime} = state;
     const decreNum = ()=>{
-        if(breakInterval>1){
-            setBreakInterval(breakInterval-1);
+        if(breakTime>1){
+            setState({
+                ...state, 
+                breakTime:breakTime-1
+            });
         }else{
-            setBreakInterval(1);
+            setState({
+                ...state, 
+                breakTime:1
+            });
         }
     }
     const increNum = ()=>{
-        setBreakInterval(breakInterval+1);
+        setState({
+            ...state, 
+            breakTime:breakTime+1
+        });
     }
 
     return(
         <div className="breakInterval">
             <h1>{name}</h1>
-            <p>{breakInterval}</p>
+            <p>{breakTime}</p>
             <button onClick={decreNum}>-</button>
             <button onClick={increNum}>+</button>
         </div>
     );
 }
-
-
-
-

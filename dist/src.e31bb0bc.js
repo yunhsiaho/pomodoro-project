@@ -29652,41 +29652,39 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function BreakInterval() {
+function BreakInterval(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
   var name = "Break Time";
-
-  var _useState = (0, _react.useState)(5),
-      _useState2 = _slicedToArray(_useState, 2),
-      breakInterval = _useState2[0],
-      setBreakInterval = _useState2[1];
+  var breakTime = state.breakTime;
 
   var decreNum = function decreNum() {
-    if (breakInterval > 1) {
-      setBreakInterval(breakInterval - 1);
+    if (breakTime > 1) {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        breakTime: breakTime - 1
+      }));
     } else {
-      setBreakInterval(1);
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        breakTime: 1
+      }));
     }
   };
 
   var increNum = function increNum() {
-    setBreakInterval(breakInterval + 1);
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      breakTime: breakTime + 1
+    }));
   };
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "breakInterval"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("p", null, breakInterval), /*#__PURE__*/_react.default.createElement("button", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("p", null, breakTime), /*#__PURE__*/_react.default.createElement("button", {
     onClick: decreNum
   }, "-"), /*#__PURE__*/_react.default.createElement("button", {
     onClick: increNum
@@ -29805,10 +29803,12 @@ function Pomodoro(_ref) {
       setpauseBtn = _useState6[1];
 
   var timer = function timer() {
+    console.log("timer start");
     var interval = setInterval(function () {
       clearInterval(interval);
 
       if (pauseBtn == true) {
+        console.log("pause");
         setpauseBtn(false);
         return;
       }
@@ -29820,7 +29820,7 @@ function Pomodoro(_ref) {
         return;
       }
 
-      if (workTime !== 0) {
+      if (minutes !== 0) {
         setState(_objectSpread(_objectSpread({}, state), {}, {
           seconds: 59,
           minutes: minutes - 1
@@ -29829,8 +29829,10 @@ function Pomodoro(_ref) {
       }
 
       if (isBreak) {
+        console.log("break finish");
         setState(_objectSpread(_objectSpread({}, state), {}, {
-          minutes: minutes,
+          minutes: workTime,
+          //?????
           isBreak: false
         }));
         return;
@@ -29838,10 +29840,11 @@ function Pomodoro(_ref) {
 
       console.log("time over");
       setState(_objectSpread(_objectSpread({}, state), {}, {
-        minutes: Number(breakTime),
+        minutes: breakTime,
         isBreak: true
       }));
       setDisplayMessage(!displayMessage);
+      console.log("end of the timer");
     }, 1000);
   };
 
@@ -29851,9 +29854,14 @@ function Pomodoro(_ref) {
       return;
     }
 
+    if (pauseBtn) {
+      return;
+    }
+
+    console.log("timer is working");
     timer();
   }, [seconds, isBreak]);
-  var timerMinutes = minutes < 10 ? "0".concat(minutes) : workTime;
+  var timerMinutes = minutes < 10 ? "0".concat(minutes) : minutes;
   var timerSeconds = seconds < 10 ? "0".concat(seconds) : seconds;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "pomodoro"
@@ -29883,12 +29891,6 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function Reset(_ref) {
   var setState = _ref.setState,
       state = _ref.state;
@@ -29896,12 +29898,14 @@ function Reset(_ref) {
       breakTime = state.breakTime;
 
   var reset = function reset() {
-    setState(_objectSpread(_objectSpread({}, state), {}, {
+    console.log("reset!");
+    setState({
+      // isBreak:true,
+      // seconds:0,
       breakTime: breakTime,
       workTime: workTime,
-      isBreak: false,
       minutes: workTime
-    }));
+    });
   };
 
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -29958,7 +29962,9 @@ var main = function main() {
     workTime: 0,
     isBreak: false,
     seconds: 5,
-    minutes: 3
+    minutes: 3,
+    isReset: false //!!!!!!!!!!!!!
+
   }),
       _useState2 = _slicedToArray(_useState, 2),
       state = _useState2[0],
@@ -29970,20 +29976,20 @@ var main = function main() {
     },
     state: state
   }), /*#__PURE__*/_react.default.createElement(_breakInterval.default, {
-    breakTime: state.breakTime,
     setState: function setState(newState) {
       return _setState(newState);
-    }
+    },
+    state: state
   }), /*#__PURE__*/_react.default.createElement(_workInterval.default, {
     setState: function setState(newState) {
       return _setState(newState);
     },
     state: state
   }), /*#__PURE__*/_react.default.createElement(_reset.default, {
-    state: state,
     setState: function setState(newState) {
       return _setState(newState);
-    }
+    },
+    state: state
   }));
 };
 

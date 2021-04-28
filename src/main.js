@@ -11,14 +11,15 @@ const main = () => {
         workTime:0,
         isBreak:false,
         seconds:5,
-        minutes:3
+        minutes:3,
+        isReset:false//!!!!!!!!!!!!!
     })
     return (
         <div>
             <Pomodoro setState={(newState)=>setState(newState)} state={state}/>
-            <BreakInterval  breakTime={state.breakTime} setState={(newState)=>setState(newState)}/>
+            <BreakInterval setState={(newState)=>setState(newState)} state={state}/>
             <WorkInterval setState={(newState)=>setState(newState)} state={state} />
-            <Reset state={state} setState={(newState)=>setState(newState)}/>
+            <Reset  setState={(newState)=>setState(newState)} state={state}/>
         </div>
     )
 }

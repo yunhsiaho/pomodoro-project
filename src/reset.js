@@ -4,11 +4,12 @@ import React, {useState} from 'react';
 export default function Reset({setState, state}){
     const {workTime,breakTime} = state;
     const reset =()=>{
+        console.log("reset!");
         setState({
-            ...state,
+            // isBreak:true,
+            // seconds:0,
             breakTime:breakTime,
             workTime:workTime,
-            isBreak:false,
             minutes:workTime
         })
     }

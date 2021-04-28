@@ -11,9 +11,11 @@ export default function Pomodoro({setState, state}){
 
 
     const timer = ()=> {
+        console.log("timer start")
         let interval = setInterval(() => {
             clearInterval(interval);
             if(pauseBtn==true){
+                console.log("pause");
                 setpauseBtn(false);
                 return;
             }
@@ -24,7 +26,7 @@ export default function Pomodoro({setState, state}){
                         })
                         return;
             }
-            if(workTime!==0){
+            if(minutes!==0){
                 setState({
                     ...state, 
                     seconds:59,
@@ -33,9 +35,10 @@ export default function Pomodoro({setState, state}){
                 return;
             }
             if(isBreak){
+                console.log("break finish");
                 setState({
                     ...state,
-                    minutes:minutes,
+                    minutes:workTime,//?????
                     isBreak:false
                 })
                 return;
@@ -44,10 +47,11 @@ export default function Pomodoro({setState, state}){
 
             setState({
                 ...state, 
-                minutes:Number(breakTime),
+                minutes:breakTime,
                 isBreak:true
                     })
-            setDisplayMessage(!displayMessage);        
+            setDisplayMessage(!displayMessage);       
+            console.log("end of the timer"); 
         }, 1000)
     }
     useEffect(()=>{
@@ -55,12 +59,16 @@ export default function Pomodoro({setState, state}){
             setStart(false);
             return;
         }
+        if(pauseBtn){
+            return;
+        }
+        console.log("timer is working");
             timer()
         }, [seconds,isBreak])
 
 
 
-    const timerMinutes = minutes < 10 ? `0${minutes}` : workTime;
+    const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
     return <div className="pomodoro">

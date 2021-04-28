@@ -29638,13 +29638,13 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"pomodoro.js":[function(require,module,exports) {
+},{"_css_loader":"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"breakInterval.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Pomodoro;
+exports.default = BreakInterval;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -29664,54 +29664,259 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function Pomodoro() {
-  var _useState = (0, _react.useState)(25),
-      _useState2 = _slicedToArray(_useState, 2),
-      minutes = _useState2[0],
-      setMinutes = _useState2[1];
+function BreakInterval() {
+  var name = "Break Time";
 
-  var _useState3 = (0, _react.useState)(0),
+  var _useState = (0, _react.useState)(5),
+      _useState2 = _slicedToArray(_useState, 2),
+      breakInterval = _useState2[0],
+      setBreakInterval = _useState2[1];
+
+  var decreNum = function decreNum() {
+    if (breakInterval > 1) {
+      setBreakInterval(breakInterval - 1);
+    } else {
+      setBreakInterval(1);
+    }
+  };
+
+  var increNum = function increNum() {
+    setBreakInterval(breakInterval + 1);
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "breakInterval"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("p", null, breakInterval), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: decreNum
+  }, "-"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: increNum
+  }, "+"));
+}
+},{"react":"../node_modules/react/index.js"}],"workInterval.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = WorkInterval;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function WorkInterval(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var name = "Work Time";
+  var workTime = state.workTime; // console.log(workTime);
+
+  var decreNum = function decreNum() {
+    if (workTime > 1) {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        workTime: workTime - 1
+      }));
+    } else {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        workTime: 1
+      }));
+    }
+  };
+
+  var increNum = function increNum() {
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      workTime: workTime + 1
+    }));
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "workInterval"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("p", null, workTime), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: decreNum
+  }, "-"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: increNum
+  }, "+"));
+}
+},{"react":"../node_modules/react/index.js"}],"pomodoro.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Pomodoro;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _breakInterval = require("./breakInterval");
+
+var _workInterval = require("./workInterval");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function Pomodoro(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var workTime = state.workTime,
+      seconds = state.seconds,
+      breakTime = state.breakTime,
+      isBreak = state.isBreak,
+      minutes = state.minutes;
+
+  var _useState = (0, _react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      displayMessage = _useState2[0],
+      setDisplayMessage = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(true),
       _useState4 = _slicedToArray(_useState3, 2),
-      seconds = _useState4[0],
-      setSeconds = _useState4[1];
+      start = _useState4[0],
+      setStart = _useState4[1];
 
   var _useState5 = (0, _react.useState)(false),
       _useState6 = _slicedToArray(_useState5, 2),
-      displayMessage = _useState6[0],
-      setDisplayMessage = _useState6[1];
+      pauseBtn = _useState6[0],
+      setpauseBtn = _useState6[1];
 
-  (0, _react.useEffect)(function () {
+  var timer = function timer() {
     var interval = setInterval(function () {
       clearInterval(interval);
 
-      if (seconds === 0) {
-        if (minutes !== 0) {
-          setSeconds(59);
-          setMinutes(minutes - 1);
-        } else {
-          var _minutes = displayMessage ? 24 : 4;
-
-          var _seconds = 59;
-          setSeconds(_seconds);
-          setMinutes(_minutes);
-          setDisplayMessage(!displayMessage);
-        }
-      } else {
-        setSeconds(seconds - 1);
+      if (pauseBtn == true) {
+        setpauseBtn(false);
+        return;
       }
+
+      if (seconds != 0) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          seconds: seconds - 1
+        }));
+        return;
+      }
+
+      if (workTime !== 0) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          seconds: 59,
+          minutes: minutes - 1
+        }));
+        return;
+      }
+
+      if (isBreak) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          minutes: minutes,
+          isBreak: false
+        }));
+        return;
+      }
+
+      console.log("time over");
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        minutes: Number(breakTime),
+        isBreak: true
+      }));
+      setDisplayMessage(!displayMessage);
     }, 1000);
-  }, [seconds]);
-  var timerMinutes = minutes < 10 ? "0".concat(minutes) : minutes;
+  };
+
+  (0, _react.useEffect)(function () {
+    if (start) {
+      setStart(false);
+      return;
+    }
+
+    timer();
+  }, [seconds, isBreak]);
+  var timerMinutes = minutes < 10 ? "0".concat(minutes) : workTime;
   var timerSeconds = seconds < 10 ? "0".concat(seconds) : seconds;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "pomodoro"
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: timer
+  }, "start"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: function onClick() {
+      return setpauseBtn(true);
+    }
+  }, "pause"), /*#__PURE__*/_react.default.createElement("div", {
     className: "message"
-  }, displayMessage && /*#__PURE__*/_react.default.createElement("div", null, " Break Time")), /*#__PURE__*/_react.default.createElement("div", {
+  }, displayMessage ? /*#__PURE__*/_react.default.createElement("div", null, " Break Time") : /*#__PURE__*/_react.default.createElement("div", null, " Working Time")), /*#__PURE__*/_react.default.createElement("div", {
     className: "timer"
   }, timerMinutes, ":", timerSeconds));
-}
-},{"react":"../node_modules/react/index.js"}],"app.js":[function(require,module,exports) {
+} //
+},{"react":"../node_modules/react/index.js","./breakInterval":"breakInterval.js","./workInterval":"workInterval.js"}],"reset.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Reset;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function Reset(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var workTime = state.workTime,
+      breakTime = state.breakTime;
+
+  var reset = function reset() {
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      breakTime: breakTime,
+      workTime: workTime,
+      isBreak: false,
+      minutes: workTime
+    }));
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "resetBtn"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: reset
+  }, "reset"));
+} // [state, setState] = useState({
+//     breakTime:1,
+//     workTime:0,
+//     isBreak:false,
+//     seconds:5,
+//     minutes:3
+// })
+},{"react":"../node_modules/react/index.js"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29719,13 +29924,81 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _react = _interopRequireWildcard(require("react"));
+
+var _pomodoro = _interopRequireDefault(require("./pomodoro.js"));
+
+var _breakInterval = _interopRequireDefault(require("./breakInterval"));
+
+var _workInterval = _interopRequireDefault(require("./workInterval"));
+
+var _reset = _interopRequireDefault(require("./reset"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var main = function main() {
+  var _useState = (0, _react.useState)({
+    breakTime: 1,
+    workTime: 0,
+    isBreak: false,
+    seconds: 5,
+    minutes: 3
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      state = _useState2[0],
+      _setState = _useState2[1];
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_pomodoro.default, {
+    setState: function setState(newState) {
+      return _setState(newState);
+    },
+    state: state
+  }), /*#__PURE__*/_react.default.createElement(_breakInterval.default, {
+    breakTime: state.breakTime,
+    setState: function setState(newState) {
+      return _setState(newState);
+    }
+  }), /*#__PURE__*/_react.default.createElement(_workInterval.default, {
+    setState: function setState(newState) {
+      return _setState(newState);
+    },
+    state: state
+  }), /*#__PURE__*/_react.default.createElement(_reset.default, {
+    state: state,
+    setState: function setState(newState) {
+      return _setState(newState);
+    }
+  }));
+};
+
+var _default = main;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./pomodoro.js":"pomodoro.js","./breakInterval":"breakInterval.js","./workInterval":"workInterval.js","./reset":"reset.js"}],"app.js":[function(require,module,exports) {
+"use strict";
+
 var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
 require("./css/style.css");
 
-var _pomodoro = _interopRequireDefault(require("./pomodoro.js"));
+var _main = _interopRequireDefault(require("./main"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29733,14 +30006,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var App = function App() {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "App"
-  }, /*#__PURE__*/_react.default.createElement(_pomodoro.default, null));
+  }, /*#__PURE__*/_react.default.createElement(_main.default, null));
 };
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById('root'));
-
-var _default = App;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./css/style.css":"css/style.css","./pomodoro.js":"pomodoro.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./css/style.css":"css/style.css","./main":"main.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -29780,7 +30050,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46507" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42477" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

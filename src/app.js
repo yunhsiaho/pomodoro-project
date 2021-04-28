@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import './css/style.css'//can also link css in html;
-import Pomodoro from "./pomodoro.js";
+import Main from "./main";
+
 
 const App = () => {
     return(
     <div className="App">
-        <Pomodoro />
+        <Main/>
     </div>
+    
     )
 }
 ReactDOM.render(<App/>, document.getElementById('root'))
-
-export default App;

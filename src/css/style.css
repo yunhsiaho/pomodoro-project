@@ -1,4 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Concert+One&display=swap");
 * {
-  background-color: #F6B179; }
-  * .App {
-    color: #FBE9DA; }
+  background-color: #F6B179;
+  font-family: 'Concert One', cursive; }
+  * .pomodoro {
+    font-size: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; }
+  * .breakInterval {
+    display: flex;
+    justify-content: center;
+    align-items: center; }

@@ -1,0 +1,13 @@
+* {
+  background-color: #F6B179;
+  font-family: 'Concert One', cursive; }
+  * .pomodoro {
+    font-size: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; }
+  * .breakInterval {
+    display: flex;
+    justify-content: center;
+    align-items: center; }

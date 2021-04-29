@@ -29638,9 +29638,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"tomato-head.gif":[function(require,module,exports) {
-module.exports = "/tomato-head.7aec20c8.gif";
-},{}],"pomodoro.js":[function(require,module,exports) {
+},{"./../tomato.gif":[["tomato.79ce8ad0.gif","tomato.gif"],"tomato.gif"],"_css_loader":"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"pomodoro.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29683,8 +29681,7 @@ function Pomodoro(_ref) {
       isReset = state.isReset,
       displayMessage = state.displayMessage,
       start = state.start,
-      repeatBreak = state.repeatBreak; // const[displayMessage, setDisplayMessage] = useState(false);
-  // const[start,setStart] = useState(true);
+      repeatBreak = state.repeatBreak;
 
   var _useState = (0, _react.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -29694,13 +29691,8 @@ function Pomodoro(_ref) {
   var beep = (0, _react.useRef)();
 
   var timer = function timer() {
-    // console.log("timer start")
     var interval = setInterval(function () {
-      clearInterval(interval); // if(pauseBtn){
-      //     console.log("pause");
-      //     setpauseBtn(false);
-      //     return;
-      // }
+      clearInterval(interval);
 
       if (isReset) {
         setState(_objectSpread(_objectSpread({}, state), {}, {
@@ -29713,7 +29705,6 @@ function Pomodoro(_ref) {
         beep.current.play();
         console.log("finish!");
         alert("Your pomodoro is finish");
-        ;
         return;
       }
 
@@ -29776,8 +29767,7 @@ function Pomodoro(_ref) {
 
     console.log("enter timer in useeffect");
     timer();
-  }, [seconds, isBreak]); //FIXME why there's a fucking pause when click start!?(pause pushed 2 times)
-
+  }, [seconds, isBreak]);
   var timerMinutes = minutes < 10 ? "0".concat(minutes) : minutes;
   var timerSeconds = seconds < 10 ? "0".concat(seconds) : seconds;
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -29789,11 +29779,7 @@ function Pomodoro(_ref) {
     preload: "auto",
     src: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
     ref: beep
-  })), /*#__PURE__*/_react.default.createElement("img", {
-    className: "tomato-head1",
-    src: require('./tomato-head.gif'),
-    alt: "loading..."
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  })), /*#__PURE__*/_react.default.createElement("div", {
     className: "timer"
   }, timerMinutes, ":", timerSeconds), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
     onClick: timer
@@ -29803,7 +29789,7 @@ function Pomodoro(_ref) {
     }
   }, "pause")));
 } //
-},{"react":"../node_modules/react/index.js","./tomato-head.gif":"tomato-head.gif"}],"breakInterval.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"breakInterval.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29849,11 +29835,7 @@ function BreakInterval(_ref) {
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "breakInterval"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("img", {
-    className: "tomato-head",
-    src: require('./tomato-head.gif'),
-    alt: "loading..."
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("div", {
     className: "btnSet"
   }, /*#__PURE__*/_react.default.createElement("button", {
     className: "button",
@@ -29863,7 +29845,7 @@ function BreakInterval(_ref) {
     onClick: increNum
   }, "+")));
 }
-},{"react":"../node_modules/react/index.js","./tomato-head.gif":"tomato-head.gif"}],"workInterval.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"workInterval.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29909,11 +29891,7 @@ function WorkInterval(_ref) {
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "workInterval"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("img", {
-    className: "tomato-head",
-    src: require('./tomato-head.gif'),
-    alt: "loading..."
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("div", {
     className: "btnSet"
   }, /*#__PURE__*/_react.default.createElement("button", {
     className: "button",
@@ -29923,7 +29901,7 @@ function WorkInterval(_ref) {
     onClick: increNum
   }, "+")));
 }
-},{"react":"../node_modules/react/index.js","./tomato-head.gif":"tomato-head.gif"}],"reset.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"reset.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32868,11 +32846,7 @@ function RepeatBreak(_ref) {
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "repeatBreak"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("img", {
-    className: "tomato-head",
-    src: require('./tomato-head.gif'),
-    alt: "loading..."
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("div", {
     className: "btnSet"
   }, /*#__PURE__*/_react.default.createElement("button", {
     className: "button",
@@ -32882,7 +32856,7 @@ function RepeatBreak(_ref) {
     onClick: increNum
   }, "+")));
 }
-},{"react":"../node_modules/react/index.js","./tomato-head.gif":"tomato-head.gif"}],"main.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33034,7 +33008,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45073" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34521" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

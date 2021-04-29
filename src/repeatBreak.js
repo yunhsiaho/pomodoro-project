@@ -26,7 +26,6 @@ export default function RepeatBreak({setState, state}){
     return(
         <div className="repeatBreak">
             <h1>{name}</h1>    
-            <img className="tomato-head" src={require('./tomato-head.gif')} alt="loading..." />        
             <div className="btnSet">
             <button className="button" onClick={decreNum}>-</button>
             <p>{repeatBreak}</p>

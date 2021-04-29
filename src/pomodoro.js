@@ -3,20 +3,12 @@ import React, {useState, useEffect, useRef} from "react";
 
 export default function Pomodoro({setState, state}){
     const {workTime, seconds, breakTime, isBreak, minutes, isReset, displayMessage,start,repeatBreak} = state;
-    // const[displayMessage, setDisplayMessage] = useState(false);
-    // const[start,setStart] = useState(true);
     const [pauseBtn,setpauseBtn] = useState(false);
     const beep = useRef();
 
     const timer = ()=> {
-        // console.log("timer start")
         let interval = setInterval(() => {
             clearInterval(interval);
-            // if(pauseBtn){
-            //     console.log("pause");
-            //     setpauseBtn(false);
-            //     return;
-            // }
             if(isReset){
                 setState({
                     ...state,
@@ -27,7 +19,7 @@ export default function Pomodoro({setState, state}){
             if(repeatBreak==0){
                 beep.current.play();
                 console.log("finish!");
-                alert("Your pomodoro is finish");;
+                alert("Your pomodoro is finish");
                 return;
             }
             if(seconds!=0){
@@ -89,9 +81,6 @@ export default function Pomodoro({setState, state}){
             timer()
         }, [seconds,isBreak])
     
-//FIXME why there's a fucking pause when click start!?(pause pushed 2 times)
-
-
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
@@ -105,7 +94,6 @@ export default function Pomodoro({setState, state}){
             ref={beep}
         ></audio>
     </div>
-    <img className="tomato-head1" src={require('./tomato-head.gif')} alt="loading..." />
     <div className="timer">
         {timerMinutes}:{timerSeconds}
     </div>

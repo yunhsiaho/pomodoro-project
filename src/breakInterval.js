@@ -26,7 +26,6 @@ export default function BreakInterval({setState, state}){
     return(
         <div className="breakInterval">
             <h1>{name}</h1>
-            <img className="tomato-head" src={require('./tomato-head.gif')} alt="loading..." />
             <div className="btnSet">
             <button className="button" onClick={decreNum}>-</button>
             <p>{breakTime}</p>

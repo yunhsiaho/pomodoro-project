@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
 * {
-  background-color: #F6B179;
+  background-color: black;
   font-family: 'Fredoka One', cursive;
   color: #FCE9D9; }
   * .pomodoro {
@@ -16,9 +16,10 @@
       margin-top: 3rem; }
     * .pomodoro .timer {
       margin-top: 8rem;
-      border: 1px solid #E76A4B;
-      border-radius: 50%;
-      background-color: #E76A4B;
+      background-image: url(./../tomato.gif);
+      background-size: 70%;
+      background-repeat: no-repeat;
+      background-position: top;
       padding-top: 10rem;
       padding-bottom: 10rem;
       padding-left: 10rem;
@@ -75,32 +76,38 @@
     width: 28%;
     text-align: center; }
   * .repeatBreak {
+    position: absolute;
     display: flex;
     flex-direction: column;
     float: right;
     width: 28%;
     text-align: center;
-    margin-top: -35%; }
+    margin-top: -35%;
+    right: 2%; }
   * h1 {
     margin-top: 1rem;
     margin-bottom: -1rem;
-    font-size: 3rem; }
+    font-size: 3rem;
+    z-index: 1; }
   * p {
-    width: 30%;
+    width: 150px;
     font-size: 4rem;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 1px solid #E76A4B;
-    border-radius: 50%;
-    background-color: #E76A4B;
+    background-image: url(./../tomato.gif);
+    background-size: 75%;
+    background-position: top;
+    background-repeat: no-repeat;
     padding-top: 4rem;
     padding-bottom: 4rem;
     padding-left: 3rem;
     padding-right: 3rem; }
   * .resetBtn {
+    position: absolute;
+    right: 51%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -120,20 +127,6 @@
     * .resetBtn button:active {
       background-color: #FCE9D9;
       color: #2BA195; }
-  * .tomato-head {
-    height: 60%;
-    width: 60%;
-    z-index: 1;
-    background-color: transparent;
-    margin-bottom: -16rem;
-    margin-left: 7rem; }
-  * .tomato-head1 {
-    height: 80%;
-    width: 80%;
-    z-index: 1;
-    background-color: transparent;
-    margin-bottom: -31rem;
-    margin-left: 3rem; }
 
 .modal {
   background-color: white;

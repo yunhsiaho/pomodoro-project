@@ -1,35 +1,35 @@
 import React, {useState} from 'react';
 
-export default function BreakInterval({setState, state}){
-    const name = "Break Time";
-    const {breakTime} = state;
+export default function RepeatBreak({setState, state}){
+    const name = "Repeat Session";
+    const {repeatBreak} = state;
     const decreNum = ()=>{
-        if(breakTime>1){
+        if(repeatBreak>1){
             setState({
                 ...state, 
-                breakTime:breakTime-1
+                repeatBreak:repeatBreak-1
             });
         }else{
             setState({
                 ...state, 
-                breakTime:1
+                repeatBreak:1
             });
         }
     }
     const increNum = ()=>{
         setState({
             ...state, 
-            breakTime:breakTime+1
+            repeatBreak:repeatBreak+1
         });
     }
 
     return(
-        <div className="breakInterval">
-            <h1>{name}</h1>
-            <img className="tomato-head" src={require('./tomato-head.gif')} alt="loading..." />
+        <div className="repeatBreak">
+            <h1>{name}</h1>    
+            <img className="tomato-head" src={require('./tomato-head.gif')} alt="loading..." />        
             <div className="btnSet">
             <button className="button" onClick={decreNum}>-</button>
-            <p>{breakTime}</p>
+            <p>{repeatBreak}</p>
             <button className="button" onClick={increNum}>+</button>
             </div>
         </div>

@@ -17,7 +17,7 @@ transform             : 'translate(-50%, -50%)'
 Modal.setAppElement('#root')
 
 export default function ModalApp({setState, state}){
-    const {workTime, seconds, breakTime, isBreak, minutes, isReset,displayMessage,start} = state;
+    const {isBreak,displayMessage,start,repeatBreak} = state;
     let subtitle;
     const [modalIsOpen,setIsOpen] = useState(false);
 
@@ -27,7 +27,7 @@ export default function ModalApp({setState, state}){
 
     const afterOpenModal =() => {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
+    subtitle.style.color = '#FFFFFF';
     }
 
     const closeModal =() =>{
@@ -40,7 +40,7 @@ export default function ModalApp({setState, state}){
     }
 
     useEffect(()=>{
-    if(!start){
+    if(!start && repeatBreak!==0){
         openModal();
     }
     }, [isBreak])
@@ -48,7 +48,7 @@ export default function ModalApp({setState, state}){
 
 return (
     <div>
-    <button onClick={openModal}>Open Modal</button>
+    {/* <button onClick={openModal}>Open Modal</button> */}
     <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -56,16 +56,16 @@ return (
         style={customStyles}
         contentLabel="Example Modal"
     >
-
+        <div className="modal">
         <h2 ref={_subtitle => (subtitle = _subtitle)}>
-        {displayMessage ?  <div>It's Break Time!</div>: <div>It's Work Time!</div>} 
+        {displayMessage ?  <div className="title1">It's Break Time!</div>: <div className="title1">It's Work Time!</div>} 
         </h2>
-        <div>{displayMessage ?  <div>Take a break!</div>: <div> Go back to work!</div>}</div>
-        <form>
-        <input />
-        <button onClick={closeModal}>close</button>
-        <button onClick={refreshPage}>Start a new timer</button> //stop and reset, or refresh the page?
-        </form>
+        <div>{displayMessage ? <div className="title1">Take a break!</div>: <div className="title1"> Time to be back to work!</div>}</div>
+        
+        <button className="button1" onClick={closeModal}>close</button>
+        <button className="button1" onClick={refreshPage}>Start a new timer</button>
+        
+        </div>
     </Modal>
     </div>
 );

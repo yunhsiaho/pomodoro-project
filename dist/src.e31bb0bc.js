@@ -29638,7 +29638,172 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"breakInterval.js":[function(require,module,exports) {
+},{"_css_loader":"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"tomato-head.gif":[function(require,module,exports) {
+module.exports = "/tomato-head.7aec20c8.gif";
+},{}],"pomodoro.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Pomodoro;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function Pomodoro(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var workTime = state.workTime,
+      seconds = state.seconds,
+      breakTime = state.breakTime,
+      isBreak = state.isBreak,
+      minutes = state.minutes,
+      isReset = state.isReset,
+      displayMessage = state.displayMessage,
+      start = state.start,
+      repeatBreak = state.repeatBreak; // const[displayMessage, setDisplayMessage] = useState(false);
+  // const[start,setStart] = useState(true);
+
+  var _useState = (0, _react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      pauseBtn = _useState2[0],
+      setpauseBtn = _useState2[1];
+
+  var beep = (0, _react.useRef)();
+
+  var timer = function timer() {
+    // console.log("timer start")
+    var interval = setInterval(function () {
+      clearInterval(interval); // if(pauseBtn){
+      //     console.log("pause");
+      //     setpauseBtn(false);
+      //     return;
+      // }
+
+      if (isReset) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          isReset: false
+        }));
+        return;
+      }
+
+      if (repeatBreak == 0) {
+        beep.current.play();
+        console.log("finish!");
+        alert("Your pomodoro is finish");
+        ;
+        return;
+      }
+
+      if (seconds != 0) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          seconds: seconds - 1
+        }));
+        return;
+      }
+
+      if (minutes !== 0) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          seconds: 59,
+          minutes: minutes - 1
+        }));
+        return;
+      }
+
+      if (isBreak) {
+        console.log("break finish");
+        beep.current.play();
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          minutes: workTime,
+          //?????
+          isBreak: false,
+          displayMessage: false,
+          repeatBreak: repeatBreak - 1
+        })); // setDisplayMessage(!displayMessage);  
+
+        return;
+      }
+
+      console.log("time over");
+      beep.current.play();
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        minutes: breakTime,
+        isBreak: true,
+        displayMessage: true
+      })); // setDisplayMessage(!displayMessage);       
+
+      console.log("end of the timer");
+    }, 1000);
+  };
+
+  (0, _react.useEffect)(function () {
+    if (start) {
+      console.log("start in useeffect");
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        start: false
+      }));
+      setpauseBtn(false);
+      return;
+    }
+
+    if (pauseBtn) {
+      console.log("pause in useeffect");
+      setpauseBtn(false);
+      return;
+    }
+
+    console.log("enter timer in useeffect");
+    timer();
+  }, [seconds, isBreak]); //FIXME why there's a fucking pause when click start!?(pause pushed 2 times)
+
+  var timerMinutes = minutes < 10 ? "0".concat(minutes) : minutes;
+  var timerSeconds = seconds < 10 ? "0".concat(seconds) : seconds;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "pomodoro"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "message"
+  }, displayMessage ? /*#__PURE__*/_react.default.createElement("div", null, " Break Time") : /*#__PURE__*/_react.default.createElement("div", null, " Working Time"), /*#__PURE__*/_react.default.createElement("audio", {
+    id: "beep",
+    preload: "auto",
+    src: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    ref: beep
+  })), /*#__PURE__*/_react.default.createElement("img", {
+    className: "tomato-head1",
+    src: require('./tomato-head.gif'),
+    alt: "loading..."
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: "timer"
+  }, timerMinutes, ":", timerSeconds), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: timer
+  }, "start"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: function onClick() {
+      return setpauseBtn(true);
+    }
+  }, "pause")));
+} //
+},{"react":"../node_modules/react/index.js","./tomato-head.gif":"tomato-head.gif"}],"breakInterval.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29684,13 +29849,21 @@ function BreakInterval(_ref) {
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "breakInterval"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("p", null, breakTime), /*#__PURE__*/_react.default.createElement("button", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("img", {
+    className: "tomato-head",
+    src: require('./tomato-head.gif'),
+    alt: "loading..."
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: "btnSet"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
     onClick: decreNum
-  }, "-"), /*#__PURE__*/_react.default.createElement("button", {
+  }, "-"), /*#__PURE__*/_react.default.createElement("p", null, breakTime), /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
     onClick: increNum
-  }, "+"));
+  }, "+")));
 }
-},{"react":"../node_modules/react/index.js"}],"workInterval.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./tomato-head.gif":"tomato-head.gif"}],"workInterval.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29736,166 +29909,21 @@ function WorkInterval(_ref) {
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "workInterval"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("p", null, workTime), /*#__PURE__*/_react.default.createElement("button", {
-    onClick: decreNum
-  }, "-"), /*#__PURE__*/_react.default.createElement("button", {
-    onClick: increNum
-  }, "+"));
-}
-},{"react":"../node_modules/react/index.js"}],"pomodoro.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Pomodoro;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _breakInterval = require("./breakInterval");
-
-var _workInterval = require("./workInterval");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function Pomodoro(_ref) {
-  var setState = _ref.setState,
-      state = _ref.state;
-  var workTime = state.workTime,
-      seconds = state.seconds,
-      breakTime = state.breakTime,
-      isBreak = state.isBreak,
-      minutes = state.minutes,
-      isReset = state.isReset,
-      displayMessage = state.displayMessage,
-      start = state.start; // const[displayMessage, setDisplayMessage] = useState(false);
-  // const[start,setStart] = useState(true);
-
-  var _useState = (0, _react.useState)(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      pauseBtn = _useState2[0],
-      setpauseBtn = _useState2[1];
-
-  var beep = (0, _react.useRef)();
-
-  var timer = function timer() {
-    // console.log("timer start")
-    var interval = setInterval(function () {
-      clearInterval(interval); // if(pauseBtn){
-      //     console.log("pause");
-      //     setpauseBtn(false);
-      //     return;
-      // }
-
-      if (isReset) {
-        setState(_objectSpread(_objectSpread({}, state), {}, {
-          isReset: false
-        }));
-        return;
-      }
-
-      if (seconds != 0) {
-        setState(_objectSpread(_objectSpread({}, state), {}, {
-          seconds: seconds - 1
-        }));
-        return;
-      }
-
-      if (minutes !== 0) {
-        setState(_objectSpread(_objectSpread({}, state), {}, {
-          seconds: 59,
-          minutes: minutes - 1
-        }));
-        return;
-      }
-
-      if (isBreak) {
-        console.log("break finish");
-        beep.current.play();
-        setState(_objectSpread(_objectSpread({}, state), {}, {
-          minutes: workTime,
-          //?????
-          isBreak: false,
-          displayMessage: false
-        })); // setDisplayMessage(!displayMessage);  
-
-        return;
-      }
-
-      console.log("time over");
-      beep.current.play();
-      setState(_objectSpread(_objectSpread({}, state), {}, {
-        minutes: breakTime,
-        isBreak: true,
-        displayMessage: true
-      })); // setDisplayMessage(!displayMessage);       
-
-      console.log("end of the timer");
-    }, 100);
-  };
-
-  (0, _react.useEffect)(function () {
-    if (start) {
-      console.log("start in useeffect");
-      setState(_objectSpread(_objectSpread({}, state), {}, {
-        start: false
-      }));
-      setpauseBtn(false);
-      return;
-    }
-
-    if (pauseBtn) {
-      console.log("pause in useeffect");
-      setpauseBtn(false);
-      return;
-    }
-
-    console.log("enter timer in useeffect");
-    timer();
-  }, [seconds, isBreak]); //FIXME why there's a fucking pause when click start!?(pause pushed 2 times)
-
-  var timerMinutes = minutes < 10 ? "0".concat(minutes) : minutes;
-  var timerSeconds = seconds < 10 ? "0".concat(seconds) : seconds;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "pomodoro"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("img", {
+    className: "tomato-head",
+    src: require('./tomato-head.gif'),
+    alt: "loading..."
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: "btnSet"
   }, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: timer
-  }, "start"), /*#__PURE__*/_react.default.createElement("button", {
-    onClick: function onClick() {
-      return setpauseBtn(true);
-    }
-  }, "pause"), /*#__PURE__*/_react.default.createElement("div", {
-    className: "message"
-  }, displayMessage ? /*#__PURE__*/_react.default.createElement("div", null, " Break Time") : /*#__PURE__*/_react.default.createElement("div", null, " Working Time"), /*#__PURE__*/_react.default.createElement("audio", {
-    id: "beep",
-    preload: "auto",
-    src: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
-    ref: beep
-  })), /*#__PURE__*/_react.default.createElement("div", {
-    className: "timer"
-  }, timerMinutes, ":", timerSeconds));
-} //
-},{"react":"../node_modules/react/index.js","./breakInterval":"breakInterval.js","./workInterval":"workInterval.js"}],"reset.js":[function(require,module,exports) {
+    className: "button",
+    onClick: decreNum
+  }, "-"), /*#__PURE__*/_react.default.createElement("p", null, workTime), /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
+    onClick: increNum
+  }, "+")));
+}
+},{"react":"../node_modules/react/index.js","./tomato-head.gif":"tomato-head.gif"}],"reset.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29914,7 +29942,8 @@ function Reset(_ref) {
       state = _ref.state;
   var workTime = state.workTime,
       breakTime = state.breakTime,
-      isReset = state.isReset;
+      isReset = state.isReset,
+      repeatBreak = state.repeatBreak;
 
   var reset = function reset() {
     console.log("reset!");
@@ -29924,7 +29953,8 @@ function Reset(_ref) {
       breakTime: breakTime,
       workTime: workTime,
       minutes: workTime,
-      isReset: true
+      isReset: true,
+      repeatBreak: 1
     });
   };
 
@@ -29935,14 +29965,7 @@ function Reset(_ref) {
       reset();
     }
   }, "reset"));
-} //FIXMEAHHHHHHHHH RESET
-// [state, setState] = useState({
-//     breakTime:1,
-//     workTime:0,
-//     isBreak:false,
-//     seconds:5,
-//     minutes:3
-// })
+}
 },{"react":"../node_modules/react/index.js"}],"../node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
 /** @license React v16.13.1
  * react-is.development.js
@@ -32737,14 +32760,10 @@ _reactModal.default.setAppElement('#root');
 function ModalApp(_ref) {
   var setState = _ref.setState,
       state = _ref.state;
-  var workTime = state.workTime,
-      seconds = state.seconds,
-      breakTime = state.breakTime,
-      isBreak = state.isBreak,
-      minutes = state.minutes,
-      isReset = state.isReset,
+  var isBreak = state.isBreak,
       displayMessage = state.displayMessage,
-      start = state.start;
+      start = state.start,
+      repeatBreak = state.repeatBreak;
   var subtitle;
 
   var _useState = (0, _react.useState)(false),
@@ -32758,7 +32777,7 @@ function ModalApp(_ref) {
 
   var afterOpenModal = function afterOpenModal() {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
+    subtitle.style.color = '#FFFFFF';
   };
 
   var closeModal = function closeModal() {
@@ -32771,29 +32790,99 @@ function ModalApp(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    if (!start) {
+    if (!start && repeatBreak !== 0) {
       openModal();
     }
   }, [isBreak]);
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: openModal
-  }, "Open Modal"), /*#__PURE__*/_react.default.createElement(_reactModal.default, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactModal.default, {
     isOpen: modalIsOpen,
     onAfterOpen: afterOpenModal,
     onRequestClose: closeModal,
     style: customStyles,
     contentLabel: "Example Modal"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "modal"
   }, /*#__PURE__*/_react.default.createElement("h2", {
     ref: function ref(_subtitle) {
       return subtitle = _subtitle;
     }
-  }, displayMessage ? /*#__PURE__*/_react.default.createElement("div", null, "It's Break Time!") : /*#__PURE__*/_react.default.createElement("div", null, "It's Work Time!")), /*#__PURE__*/_react.default.createElement("div", null, displayMessage ? /*#__PURE__*/_react.default.createElement("div", null, "Take a break!") : /*#__PURE__*/_react.default.createElement("div", null, " Go back to work!")), /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("input", null), /*#__PURE__*/_react.default.createElement("button", {
+  }, displayMessage ? /*#__PURE__*/_react.default.createElement("div", {
+    className: "title1"
+  }, "It's Break Time!") : /*#__PURE__*/_react.default.createElement("div", {
+    className: "title1"
+  }, "It's Work Time!")), /*#__PURE__*/_react.default.createElement("div", null, displayMessage ? /*#__PURE__*/_react.default.createElement("div", {
+    className: "title1"
+  }, "Take a break!") : /*#__PURE__*/_react.default.createElement("div", {
+    className: "title1"
+  }, " Time to be back to work!")), /*#__PURE__*/_react.default.createElement("button", {
+    className: "button1",
     onClick: closeModal
   }, "close"), /*#__PURE__*/_react.default.createElement("button", {
+    className: "button1",
     onClick: refreshPage
-  }, "Start a new timer"), " //stop and reset, or refresh the page?")));
+  }, "Start a new timer"))));
 }
-},{"react":"../node_modules/react/index.js","react-modal":"../node_modules/react-modal/lib/index.js"}],"main.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-modal":"../node_modules/react-modal/lib/index.js"}],"repeatBreak.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = RepeatBreak;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function RepeatBreak(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var name = "Repeat Session";
+  var repeatBreak = state.repeatBreak;
+
+  var decreNum = function decreNum() {
+    if (repeatBreak > 1) {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        repeatBreak: repeatBreak - 1
+      }));
+    } else {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        repeatBreak: 1
+      }));
+    }
+  };
+
+  var increNum = function increNum() {
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      repeatBreak: repeatBreak + 1
+    }));
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "repeatBreak"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("img", {
+    className: "tomato-head",
+    src: require('./tomato-head.gif'),
+    alt: "loading..."
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: "btnSet"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
+    onClick: decreNum
+  }, "-"), /*#__PURE__*/_react.default.createElement("p", null, repeatBreak), /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
+    onClick: increNum
+  }, "+")));
+}
+},{"react":"../node_modules/react/index.js","./tomato-head.gif":"tomato-head.gif"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32812,6 +32901,8 @@ var _workInterval = _interopRequireDefault(require("./workInterval"));
 var _reset = _interopRequireDefault(require("./reset"));
 
 var _modal = _interopRequireDefault(require("./modal"));
+
+var _repeatBreak = _interopRequireDefault(require("./repeatBreak"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32833,15 +32924,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var main = function main() {
   var _useState = (0, _react.useState)({
-    breakTime: 1,
-    workTime: 2,
+    breakTime: 5,
+    workTime: 25,
     isBreak: false,
-    seconds: 5,
-    minutes: 3,
+    seconds: 0,
+    minutes: 25,
     isReset: false,
-    //!!!!!!!!!!!!!
     displayMessage: false,
-    start: true
+    start: true,
+    repeatBreak: 1
   }),
       _useState2 = _slicedToArray(_useState, 2),
       state = _useState2[0],
@@ -32852,17 +32943,12 @@ var main = function main() {
       return _setState(newState);
     },
     state: state
-  }), /*#__PURE__*/_react.default.createElement(_breakInterval.default, {
-    setState: function setState(newState) {
-      return _setState(newState);
-    },
-    state: state
   }), /*#__PURE__*/_react.default.createElement(_workInterval.default, {
     setState: function setState(newState) {
       return _setState(newState);
     },
     state: state
-  }), /*#__PURE__*/_react.default.createElement(_reset.default, {
+  }), /*#__PURE__*/_react.default.createElement(_breakInterval.default, {
     setState: function setState(newState) {
       return _setState(newState);
     },
@@ -32872,12 +32958,22 @@ var main = function main() {
       return _setState(newState);
     },
     state: state
+  }), /*#__PURE__*/_react.default.createElement(_repeatBreak.default, {
+    setState: function setState(newState) {
+      return _setState(newState);
+    },
+    state: state
+  }), /*#__PURE__*/_react.default.createElement(_reset.default, {
+    setState: function setState(newState) {
+      return _setState(newState);
+    },
+    state: state
   }));
 };
 
 var _default = main;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./pomodoro.js":"pomodoro.js","./breakInterval":"breakInterval.js","./workInterval":"workInterval.js","./reset":"reset.js","./modal":"modal.js"}],"app.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./pomodoro.js":"pomodoro.js","./breakInterval":"breakInterval.js","./workInterval":"workInterval.js","./reset":"reset.js","./modal":"modal.js","./repeatBreak":"repeatBreak.js"}],"app.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -32938,7 +33034,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45451" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45073" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

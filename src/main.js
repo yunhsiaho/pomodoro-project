@@ -4,25 +4,28 @@ import BreakInterval from "./breakInterval";
 import WorkInterval from "./workInterval";
 import Reset from "./reset";
 import ModalApp from "./modal";
+import RepeatBreak from "./repeatBreak"
 
 const main = () => {
     const [state, setState] = useState({
-        breakTime:1,
-        workTime:2,
+        breakTime:5,
+        workTime:25,
         isBreak:false,
-        seconds:5,
-        minutes:3,
-        isReset:false,//!!!!!!!!!!!!!
+        seconds:0,
+        minutes:25,
+        isReset:false,
         displayMessage:false,
-        start:true
+        start:true,
+        repeatBreak:1,
     })
     return (
         <div>
             <Pomodoro setState={(newState)=>setState(newState)} state={state}/>
-            <BreakInterval setState={(newState)=>setState(newState)} state={state}/>
             <WorkInterval setState={(newState)=>setState(newState)} state={state} />
-            <Reset  setState={(newState)=>setState(newState)} state={state}/>
+            <BreakInterval setState={(newState)=>setState(newState)} state={state}/>
             <ModalApp setState={(newState)=>setState(newState)} state={state}/>
+            <RepeatBreak setState={(newState)=>setState(newState)} state={state}/>
+            <Reset  setState={(newState)=>setState(newState)} state={state}/>
         </div>
     )
 }

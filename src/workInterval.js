@@ -27,9 +27,12 @@ export default function WorkInterval({setState, state}){
     return(
         <div className="workInterval">
             <h1>{name}</h1>
+            <img className="tomato-head" src={require('./tomato-head.gif')} alt="loading..." />
+            <div className="btnSet">
+            <button className="button" onClick={decreNum}>-</button>
             <p>{workTime}</p>
-            <button onClick={decreNum}>-</button>
-            <button onClick={increNum}>+</button>
+            <button className="button" onClick={increNum}>+</button>
+            </div>
         </div>
     );
 }

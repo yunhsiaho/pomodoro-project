@@ -1,10 +1,8 @@
 import React, {useState, useEffect, useRef} from "react";
-import {breakInterval} from "./breakInterval";
-import {workInterval} from "./workInterval";
 
 
 export default function Pomodoro({setState, state}){
-    const {workTime, seconds, breakTime, isBreak, minutes, isReset, displayMessage,start} = state;
+    const {workTime, seconds, breakTime, isBreak, minutes, isReset, displayMessage,start,repeatBreak} = state;
     // const[displayMessage, setDisplayMessage] = useState(false);
     // const[start,setStart] = useState(true);
     const [pauseBtn,setpauseBtn] = useState(false);
@@ -24,6 +22,12 @@ export default function Pomodoro({setState, state}){
                     ...state,
                     isReset:false
                 })
+                return;
+            }
+            if(repeatBreak==0){
+                beep.current.play();
+                console.log("finish!");
+                alert("Your pomodoro is finish");;
                 return;
             }
             if(seconds!=0){
@@ -48,7 +52,8 @@ export default function Pomodoro({setState, state}){
                     ...state,
                     minutes:workTime,//?????
                     isBreak:false,
-                    displayMessage:false
+                    displayMessage:false,
+                    repeatBreak:repeatBreak-1
                 })
                 // setDisplayMessage(!displayMessage);  
                 return;
@@ -63,7 +68,7 @@ export default function Pomodoro({setState, state}){
                     })
             // setDisplayMessage(!displayMessage);       
             console.log("end of the timer"); 
-        }, 100)
+        }, 1000)
     }
     useEffect(()=>{
         if(start){
@@ -83,6 +88,7 @@ export default function Pomodoro({setState, state}){
         console.log("enter timer in useeffect");
             timer()
         }, [seconds,isBreak])
+    
 //FIXME why there's a fucking pause when click start!?(pause pushed 2 times)
 
 
@@ -90,8 +96,6 @@ export default function Pomodoro({setState, state}){
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
     return <div className="pomodoro">
-                <button onClick={timer}>start</button>
-                <button onClick={()=>setpauseBtn(true)}>pause</button>
     <div className="message">
         {displayMessage ?  <div> Break Time</div>: <div> Working Time</div>}
         <audio
@@ -101,9 +105,16 @@ export default function Pomodoro({setState, state}){
             ref={beep}
         ></audio>
     </div>
+    <img className="tomato-head1" src={require('./tomato-head.gif')} alt="loading..." />
     <div className="timer">
         {timerMinutes}:{timerSeconds}
     </div>
+
+    <div>
+        <button onClick={timer}>start</button>
+        <button onClick={()=>setpauseBtn(true)}>pause</button>
+    </div>
+
     </div>
     }
 

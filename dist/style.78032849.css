@@ -9,7 +9,7 @@ body {
     border-radius: 50px;
     margin-top: 10px;
     width: 50%;
-    height: 98%; }
+    height: auto; }
     body .container .pomodoro {
       border-radius: 50px;
       text-align: center;

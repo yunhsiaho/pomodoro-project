@@ -49,7 +49,7 @@ export default function ModalApp({setState, state}){
 
 return (
     <div>
-    <button onClick={openModal}>Open Modal</button>
+    {/* <button onClick={openModal}>Open Modal</button> */}
     <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}

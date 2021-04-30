@@ -32801,9 +32801,7 @@ function ModalApp(_ref) {
       openModal();
     }
   }, [isBreak]);
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: openModal
-  }, "Open Modal"), /*#__PURE__*/_react.default.createElement(_reactModal.default, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactModal.default, {
     isOpen: modalIsOpen,
     onAfterOpen: afterOpenModal,
     onRequestClose: closeModal,

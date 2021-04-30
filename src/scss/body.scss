@@ -1,191 +1,272 @@
-@import 'variables';
+@import "variables";
 
-*{
-    background-color:$background;
-    font-family: 'Fredoka One', cursive;
+body{
+    background-image: url("../bg.jpg");
+    font-family: 'Gamja Flower', cursive;
     color:$word;
-    .pomodoro{
-        // position: absolute;
-        font-size:5rem;
-        display:flex;
-        flex-direction: column;
-        // justify-content: center;
-        align-items: center;
-        margin-left:auto;
-        margin-right:auto;
-        height:90%;
-        width:40%;
-        // border:2px solid green;
-        .message{
-            margin-top:3rem;
+    text-shadow:2px 2px 5px  hsl(337, 100%, 80%);
+    .container{
+    background-image: url('../con.jpg');
+        border-radius: 50px;
+        margin-top:10px;
+        width:50%;
+        height:98%;
+        // border:3px solid black;
+        .pomodoro{
+            border-radius: 50px;
+            // border:2px solid red;
+            text-align: center;
+            height:70%;
+            .message{
+                font-size: 100px;
+                color:$word;
+                font-weight: 900;
+            }
+            .timer{
+                font-size: 150px;
+            }
+            .btns{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                
+                .btnnn{
+                    font-size:40px;
+                    width:150px;
+                    height:80px;
+                }
+            }
         }
-        .timer{
-            margin-top:8rem;
-            background-image: url(./../tomato.gif);
-            // border:1px solid red;
-            background-size:70%;
-            background-repeat: no-repeat;
-            background-position:top ;
-            padding-top:10rem;
-            padding-bottom:10rem;
-            padding-left:10rem;
-            padding-right:10rem;
-           
+        h1{
+            font-size: 50px;
+            text-align: center;
+            margin:20px;
+        }
+        p{
+            font-size: 40px;
+            text-align: center;
+        }
+        .interval{
+            // border:1px solid black;
+            padding:10px;
         }
         button{
-            margin-top:3rem;
-            margin-left:4rem;
-            margin-right:4rem;
-            border: 1px solid $tomato-head;
-            border-radius: 30px;
-            background-color:$tomato-head ;
-            color:$word;
-            font-size:2rem;
-            height:5rem;
-            width:8rem;
-            
+            background-color: $background;
+            border-style: none;
+            color:$button;
+            box-shadow: #FF478E;
+            border-radius: 20px;
         }
         button:hover{
             transform: scale(1.1);
-            }
+        }
         button:active{
-            background-color:$word ;
-            color:$tomato-head;
-            }
+            background-color: #FF478E;
+            color:white;
+            border-style: none;
+        }
+        .button{
+            font-size: 30px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+// @import 'variables';
+
+// *{
+//     background-color:$background;
+//     font-family: 'Henny Penny', cursive;
+//     color:$word;
+//     .pomodoro{
+//         // position: absolute;
+//         font-size:5rem;
+//         display:flex;
+//         flex-direction: column;
+//         // justify-content: center;
+//         align-items: center;
+//         margin-left:auto;
+//         margin-right:auto;
+//         height:90%;
+//         width:40%;
+//         // border:2px solid green;
+//         .message{
+//             margin-top:3rem;
+//         }
+//         .timer{
+//             margin-top:8rem;
+//             background-image: url(./../tomato.gif);
+//             // border:1px solid red;
+//             background-size:70%;
+//             background-repeat: no-repeat;
+//             background-position:top ;
+//             padding-top:10rem;
+//             padding-bottom:10rem;
+//             padding-left:10rem;
+//             padding-right:10rem;
+//         }
+// //         button{
+// //             margin-top:3rem;
+// //             margin-left:4rem;
+// //             margin-right:4rem;
+// //             border: 1px solid $tomato-head;
+// //             border-radius: 30px;
+// //             background-color:$tomato-head ;
+// //             color:$word;
+// //             font-size:2rem;
+// //             height:5rem;
+// //             width:8rem;
+            
+// //         }
+// //         button:hover{
+// //             transform: scale(1.1);
+// //             }
+// //         button:active{
+// //             background-color:$word ;
+// //             color:$tomato-head;
+// //             }
         
-    }
-    .btnSet{
-        display: flex;
-        flex-direction: row;
-    }
-    .button{
-        margin-top:30%;
-        margin-left:auto;
-        margin-right:auto;
-        border: 1px solid $tomato-head;
-        border-radius: 50px;
-        background-color:$tomato-head ;
-        color:$word;
-        font-size:2rem;
-        height:4rem;
-        width:4rem;
-        justify-content: center;
-        align-items: center;
+// //     }
+// //     .btnSet{
+// //         display: flex;
+// //         flex-direction: row;
+// //     }
+// //     .button{
+// //         margin-top:30%;
+// //         margin-left:auto;
+// //         margin-right:auto;
+// //         border: 1px solid $tomato-head;
+// //         border-radius: 50px;
+// //         background-color:$tomato-head ;
+// //         color:$word;
+// //         font-size:2rem;
+// //         height:4rem;
+// //         width:4rem;
+// //         justify-content: center;
+// //         align-items: center;
         
 
-    }
-    .button:hover{
-        transform: scale(1.1);
-        }
-    .button:active{
-        background-color:$word ;
-        color:$tomato-head;
-        }
-.breakInterval{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    margin-top: -20%;
-    width:28%;
-    // border:2px solid red;
-    text-align: center;
-    }
-.workInterval{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    margin-top: -45%;
-    width:28%;
-    // border:2px solid red;
-    text-align: center;
-}
-.repeatBreak{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    float:right;
-    width:28%;
-    text-align: center;
-    margin-top:-35%;
-    right:2%;
-}
-h1{
-    margin-top:1rem;
-    margin-bottom:-1rem;
-    font-size:3rem;
-    z-index:1;
-}
-p{    
-    width:150px;
-    font-size:4rem;
-    margin-left:auto;
-    margin-right:auto;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    // border: 1px solid $tomato;
-    // border-radius: 50%;
-    // background-color:$tomato ;
-    background-image: url(./../tomato.gif);
-    // border:1px solid red;
-    background-size: 75%;
-    background-position: top;
-    background-repeat: no-repeat;
-    padding-top:4rem;
-    padding-bottom:4rem;
-    padding-left:3rem;
-    padding-right:3rem;
-}
-.resetBtn{
-    position: absolute;
-        right:51%;
-        margin-left:auto;
-        margin-right:auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    button{
-        margin-top:-17rem;
-        margin-right:-83rem;
-        border: 1px solid $tomato-head;
-        border-radius: 25px;
-        background-color:$tomato-head ;
-        color:$word;
-        font-size:2rem;
-        padding:1.2rem;
+// //     }
+// //     .button:hover{
+// //         transform: scale(1.1);
+// //         }
+// //     .button:active{
+// //         background-color:$word ;
+// //         color:$tomato-head;
+// //         }
+// // .breakInterval{
+// //     position: absolute;
+// //     display: flex;
+// //     flex-direction: column;
+// //     margin-top: -20%;
+// //     width:28%;
+// //     // border:2px solid red;
+// //     text-align: center;
+// //     }
+// // .workInterval{
+// //     position: absolute;
+// //     display: flex;
+// //     flex-direction: column;
+// //     margin-top: -45%;
+// //     width:28%;
+// //     // border:2px solid red;
+// //     text-align: center;
+// // }
+// // .repeatBreak{
+// //     position: absolute;
+// //     display: flex;
+// //     flex-direction: column;
+// //     float:right;
+// //     width:28%;
+// //     text-align: center;
+// //     margin-top:-35%;
+// //     right:2%;
+// // }
+// // h1{
+// //     margin-top:1rem;
+// //     margin-bottom:-1rem;
+// //     font-size:3rem;
+// //     z-index:1;
+// // }
+// // p{    
+// //     width:150px;
+// //     font-size:4rem;
+// //     margin-left:auto;
+// //     margin-right:auto;
+// //     justify-content: center;
+// //     align-items: center;
+// //     text-align: center;
+// //     // border: 1px solid $tomato;
+// //     // border-radius: 50%;
+// //     // background-color:$tomato ;
+// //     background-image: url(./../tomato.gif);
+// //     // border:1px solid red;
+// //     background-size: 75%;
+// //     background-position: top;
+// //     background-repeat: no-repeat;
+// //     padding-top:4rem;
+// //     padding-bottom:4rem;
+// //     padding-left:3rem;
+// //     padding-right:3rem;
+// // }
+// // .resetBtn{
+// //     position: absolute;
+// //         right:51%;
+// //         margin-left:auto;
+// //         margin-right:auto;
+// //         display: flex;
+// //         justify-content: center;
+// //         align-items: center;
+// //     button{
+// //         margin-top:-17rem;
+// //         margin-right:-83rem;
+// //         border: 1px solid $tomato-head;
+// //         border-radius: 25px;
+// //         background-color:$tomato-head ;
+// //         color:$word;
+// //         font-size:2rem;
+// //         padding:1.2rem;
         
-    }
-    button:hover{
-        transform: scale(1.1);
-        }
-    button:active{
-        background-color:$word ;
-        color:$tomato-head;
-        }
-}
-}
-.modal{
-    background-color:white;
-    color:black;
-    margin-top:1rem;
-        margin-bottom:1rem;
-    .title1{
-        background-color:white;
-        font-size: 2rem;
-        color:gray;
-        text-align: center;
-        margin-top:1rem;
-        margin-bottom:1rem;
-    }
-    .button1{
-        background-color:white;
-        border: 1px solid $tomato-head;
-        border-radius: 25px;
-        background-color:$tomato-head ;
-        color:$word;
-        font-size:1.5rem;
-        padding:0.5rem;
-        margin:1rem;
-    }
+// //     }
+// //     button:hover{
+// //         transform: scale(1.1);
+// //         }
+// //     button:active{
+// //         background-color:$word ;
+// //         color:$tomato-head;
+// //         }
+// // }
+// // }
+// .modal{
+//     background-color:white;
+//     color:black;
+//     margin-top:1rem;
+//         margin-bottom:1rem;
+//     .title1{
+//         background-color:white;
+//         font-size: 2rem;
+//         color:gray;
+//         text-align: center;
+//         margin-top:1rem;
+//         margin-bottom:1rem;
+//     }
+//     .button1{
+//         background-color:white;
+//         border: 1px solid red;
+//         border-radius: 25px;
+//         background-color:red ;
+//         color:$word;
+//         font-size:1.5rem;
+//         padding:0.5rem;
+//         margin:1rem;
+//     }
     
-}
+// }

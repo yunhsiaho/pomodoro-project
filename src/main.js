@@ -2,11 +2,10 @@ import React, {useState} from "react";
 import Pomodoro from "./pomodoro.js";
 import BreakInterval from "./breakInterval";
 import WorkInterval from "./workInterval";
-import Reset from "./reset";
 import ModalApp from "./modal";
-import RepeatBreak from "./repeatBreak"
+import RepeatBreak from "./repeatBreak";
 
-const main = () => {
+const Main = () => {
     const [state, setState] = useState({
         breakTime:5,
         workTime:25,
@@ -20,14 +19,22 @@ const main = () => {
     })
     return (
         <div>
-            <Pomodoro setState={(newState)=>setState(newState)} state={state}/>
-            <WorkInterval setState={(newState)=>setState(newState)} state={state} />
-            <BreakInterval setState={(newState)=>setState(newState)} state={state}/>
+            <div>
             <ModalApp setState={(newState)=>setState(newState)} state={state}/>
-            <RepeatBreak setState={(newState)=>setState(newState)} state={state}/>
-            <Reset  setState={(newState)=>setState(newState)} state={state}/>
+        </div>
+        <div className="container">
+            <Pomodoro setState={(newState)=>setState(newState)} state={state}/>
+                <div className="row">
+                <WorkInterval setState={(newState)=>setState(newState)} state={state} />
+                <BreakInterval setState={(newState)=>setState(newState)} state={state}/>
+                <RepeatBreak setState={(newState)=>setState(newState)} state={state}/>
+                </div>
+            <div className='row d-flex justify-content-center'>
+                <img  src={require('./tomato.gif')} />        
+            </div>
+        </div>
         </div>
     )
 }
 
-export default main
+export default Main

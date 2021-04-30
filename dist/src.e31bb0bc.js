@@ -2505,7 +2505,313 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react.development.js');
 }
-},{"./cjs/react.development.js":"../node_modules/react/cjs/react.development.js"}],"../node_modules/scheduler/cjs/scheduler.development.js":[function(require,module,exports) {
+},{"./cjs/react.development.js":"../node_modules/react/cjs/react.development.js"}],"pomodoro.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Pomodoro;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function Pomodoro(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var workTime = state.workTime,
+      seconds = state.seconds,
+      breakTime = state.breakTime,
+      isBreak = state.isBreak,
+      minutes = state.minutes,
+      isReset = state.isReset,
+      displayMessage = state.displayMessage,
+      start = state.start,
+      repeatBreak = state.repeatBreak;
+
+  var _useState = (0, _react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      pauseBtn = _useState2[0],
+      setpauseBtn = _useState2[1];
+
+  var beep = (0, _react.useRef)();
+
+  var timer = function timer() {
+    var interval = setInterval(function () {
+      clearInterval(interval);
+
+      if (isReset) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          isReset: false
+        }));
+        return;
+      }
+
+      if (repeatBreak == 0) {
+        beep.current.play();
+        console.log("finish!");
+        alert("Your pomodoro is finish");
+        return;
+      }
+
+      if (seconds != 0) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          seconds: seconds - 1
+        }));
+        return;
+      }
+
+      if (minutes !== 0) {
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          seconds: 59,
+          minutes: minutes - 1
+        }));
+        return;
+      }
+
+      if (isBreak) {
+        console.log("break finish");
+        beep.current.play();
+        setState(_objectSpread(_objectSpread({}, state), {}, {
+          minutes: workTime,
+          //?????
+          isBreak: false,
+          displayMessage: false,
+          repeatBreak: repeatBreak - 1
+        })); // setDisplayMessage(!displayMessage);  
+
+        return;
+      }
+
+      console.log("time over");
+      beep.current.play();
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        minutes: breakTime,
+        isBreak: true,
+        displayMessage: true
+      })); // setDisplayMessage(!displayMessage);       
+
+      console.log("end of the timer");
+    }, 1000);
+  };
+
+  (0, _react.useEffect)(function () {
+    if (start) {
+      console.log("start in useeffect");
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        start: false
+      }));
+      setpauseBtn(false);
+      return;
+    }
+
+    if (pauseBtn) {
+      console.log("pause in useeffect");
+      setpauseBtn(false);
+      return;
+    }
+
+    console.log("enter timer in useeffect");
+    timer();
+  }, [seconds, isBreak]);
+  var timerMinutes = minutes < 10 ? "0".concat(minutes) : minutes;
+  var timerSeconds = seconds < 10 ? "0".concat(seconds) : seconds;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "pomodoro"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "message"
+  }, displayMessage ? /*#__PURE__*/_react.default.createElement("div", null, " Break Time") : /*#__PURE__*/_react.default.createElement("div", null, " Working Time"), /*#__PURE__*/_react.default.createElement("audio", {
+    id: "beep",
+    preload: "auto",
+    src: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    ref: beep
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: "timer"
+  }, timerMinutes, ":", timerSeconds), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: timer
+  }, "start"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: function onClick() {
+      return setpauseBtn(true);
+    }
+  }, "pause")));
+} //
+},{"react":"../node_modules/react/index.js"}],"breakInterval.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = BreakInterval;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function BreakInterval(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var name = "Break Time";
+  var breakTime = state.breakTime;
+
+  var decreNum = function decreNum() {
+    if (breakTime > 1) {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        breakTime: breakTime - 1
+      }));
+    } else {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        breakTime: 1
+      }));
+    }
+  };
+
+  var increNum = function increNum() {
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      breakTime: breakTime + 1
+    }));
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "breakInterval"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("div", {
+    className: "btnSet"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
+    onClick: decreNum
+  }, "-"), /*#__PURE__*/_react.default.createElement("p", null, breakTime), /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
+    onClick: increNum
+  }, "+")));
+}
+},{"react":"../node_modules/react/index.js"}],"workInterval.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = WorkInterval;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function WorkInterval(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var name = "Work Time";
+  var workTime = state.workTime; // console.log(workTime);
+
+  var decreNum = function decreNum() {
+    if (workTime > 1) {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        workTime: workTime - 1
+      }));
+    } else {
+      setState(_objectSpread(_objectSpread({}, state), {}, {
+        workTime: 1
+      }));
+    }
+  };
+
+  var increNum = function increNum() {
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      workTime: workTime + 1
+    }));
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "workInterval"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("div", {
+    className: "btnSet"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
+    onClick: decreNum
+  }, "-"), /*#__PURE__*/_react.default.createElement("p", null, workTime), /*#__PURE__*/_react.default.createElement("button", {
+    className: "button",
+    onClick: increNum
+  }, "+")));
+}
+},{"react":"../node_modules/react/index.js"}],"reset.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Reset;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function Reset(_ref) {
+  var setState = _ref.setState,
+      state = _ref.state;
+  var workTime = state.workTime,
+      breakTime = state.breakTime,
+      isReset = state.isReset,
+      repeatBreak = state.repeatBreak;
+
+  var reset = function reset() {
+    console.log("reset!");
+    setState({
+      isBreak: false,
+      seconds: 0,
+      breakTime: breakTime,
+      workTime: workTime,
+      minutes: workTime,
+      isReset: true,
+      repeatBreak: 1
+    });
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "resetBtn"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: function onClick() {
+      reset();
+    }
+  }, "reset"));
+}
+},{"react":"../node_modules/react/index.js"}],"../node_modules/scheduler/cjs/scheduler.development.js":[function(require,module,exports) {
 /** @license React v0.20.2
  * scheduler.development.js
  *
@@ -29566,385 +29872,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"css/style.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./../tomato.gif":[["tomato.79ce8ad0.gif","tomato.gif"],"tomato.gif"],"_css_loader":"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"pomodoro.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Pomodoro;
-
-var _react = _interopRequireWildcard(require("react"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function Pomodoro(_ref) {
-  var setState = _ref.setState,
-      state = _ref.state;
-  var workTime = state.workTime,
-      seconds = state.seconds,
-      breakTime = state.breakTime,
-      isBreak = state.isBreak,
-      minutes = state.minutes,
-      isReset = state.isReset,
-      displayMessage = state.displayMessage,
-      start = state.start,
-      repeatBreak = state.repeatBreak;
-
-  var _useState = (0, _react.useState)(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      pauseBtn = _useState2[0],
-      setpauseBtn = _useState2[1];
-
-  var beep = (0, _react.useRef)();
-
-  var timer = function timer() {
-    var interval = setInterval(function () {
-      clearInterval(interval);
-
-      if (isReset) {
-        setState(_objectSpread(_objectSpread({}, state), {}, {
-          isReset: false
-        }));
-        return;
-      }
-
-      if (repeatBreak == 0) {
-        beep.current.play();
-        console.log("finish!");
-        alert("Your pomodoro is finish");
-        return;
-      }
-
-      if (seconds != 0) {
-        setState(_objectSpread(_objectSpread({}, state), {}, {
-          seconds: seconds - 1
-        }));
-        return;
-      }
-
-      if (minutes !== 0) {
-        setState(_objectSpread(_objectSpread({}, state), {}, {
-          seconds: 59,
-          minutes: minutes - 1
-        }));
-        return;
-      }
-
-      if (isBreak) {
-        console.log("break finish");
-        beep.current.play();
-        setState(_objectSpread(_objectSpread({}, state), {}, {
-          minutes: workTime,
-          //?????
-          isBreak: false,
-          displayMessage: false,
-          repeatBreak: repeatBreak - 1
-        })); // setDisplayMessage(!displayMessage);  
-
-        return;
-      }
-
-      console.log("time over");
-      beep.current.play();
-      setState(_objectSpread(_objectSpread({}, state), {}, {
-        minutes: breakTime,
-        isBreak: true,
-        displayMessage: true
-      })); // setDisplayMessage(!displayMessage);       
-
-      console.log("end of the timer");
-    }, 1000);
-  };
-
-  (0, _react.useEffect)(function () {
-    if (start) {
-      console.log("start in useeffect");
-      setState(_objectSpread(_objectSpread({}, state), {}, {
-        start: false
-      }));
-      setpauseBtn(false);
-      return;
-    }
-
-    if (pauseBtn) {
-      console.log("pause in useeffect");
-      setpauseBtn(false);
-      return;
-    }
-
-    console.log("enter timer in useeffect");
-    timer();
-  }, [seconds, isBreak]);
-  var timerMinutes = minutes < 10 ? "0".concat(minutes) : minutes;
-  var timerSeconds = seconds < 10 ? "0".concat(seconds) : seconds;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "pomodoro"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "message"
-  }, displayMessage ? /*#__PURE__*/_react.default.createElement("div", null, " Break Time") : /*#__PURE__*/_react.default.createElement("div", null, " Working Time"), /*#__PURE__*/_react.default.createElement("audio", {
-    id: "beep",
-    preload: "auto",
-    src: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
-    ref: beep
-  })), /*#__PURE__*/_react.default.createElement("div", {
-    className: "timer"
-  }, timerMinutes, ":", timerSeconds), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: timer
-  }, "start"), /*#__PURE__*/_react.default.createElement("button", {
-    onClick: function onClick() {
-      return setpauseBtn(true);
-    }
-  }, "pause")));
-} //
-},{"react":"../node_modules/react/index.js"}],"breakInterval.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = BreakInterval;
-
-var _react = _interopRequireWildcard(require("react"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function BreakInterval(_ref) {
-  var setState = _ref.setState,
-      state = _ref.state;
-  var name = "Break Time";
-  var breakTime = state.breakTime;
-
-  var decreNum = function decreNum() {
-    if (breakTime > 1) {
-      setState(_objectSpread(_objectSpread({}, state), {}, {
-        breakTime: breakTime - 1
-      }));
-    } else {
-      setState(_objectSpread(_objectSpread({}, state), {}, {
-        breakTime: 1
-      }));
-    }
-  };
-
-  var increNum = function increNum() {
-    setState(_objectSpread(_objectSpread({}, state), {}, {
-      breakTime: breakTime + 1
-    }));
-  };
-
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "breakInterval"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("div", {
-    className: "btnSet"
-  }, /*#__PURE__*/_react.default.createElement("button", {
-    className: "button",
-    onClick: decreNum
-  }, "-"), /*#__PURE__*/_react.default.createElement("p", null, breakTime), /*#__PURE__*/_react.default.createElement("button", {
-    className: "button",
-    onClick: increNum
-  }, "+")));
-}
-},{"react":"../node_modules/react/index.js"}],"workInterval.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = WorkInterval;
-
-var _react = _interopRequireWildcard(require("react"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function WorkInterval(_ref) {
-  var setState = _ref.setState,
-      state = _ref.state;
-  var name = "Work Time";
-  var workTime = state.workTime; // console.log(workTime);
-
-  var decreNum = function decreNum() {
-    if (workTime > 1) {
-      setState(_objectSpread(_objectSpread({}, state), {}, {
-        workTime: workTime - 1
-      }));
-    } else {
-      setState(_objectSpread(_objectSpread({}, state), {}, {
-        workTime: 1
-      }));
-    }
-  };
-
-  var increNum = function increNum() {
-    setState(_objectSpread(_objectSpread({}, state), {}, {
-      workTime: workTime + 1
-    }));
-  };
-
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "workInterval"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("div", {
-    className: "btnSet"
-  }, /*#__PURE__*/_react.default.createElement("button", {
-    className: "button",
-    onClick: decreNum
-  }, "-"), /*#__PURE__*/_react.default.createElement("p", null, workTime), /*#__PURE__*/_react.default.createElement("button", {
-    className: "button",
-    onClick: increNum
-  }, "+")));
-}
-},{"react":"../node_modules/react/index.js"}],"reset.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Reset;
-
-var _react = _interopRequireWildcard(require("react"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function Reset(_ref) {
-  var setState = _ref.setState,
-      state = _ref.state;
-  var workTime = state.workTime,
-      breakTime = state.breakTime,
-      isReset = state.isReset,
-      repeatBreak = state.repeatBreak;
-
-  var reset = function reset() {
-    console.log("reset!");
-    setState({
-      isBreak: false,
-      seconds: 0,
-      breakTime: breakTime,
-      workTime: workTime,
-      minutes: workTime,
-      isReset: true,
-      repeatBreak: 1
-    });
-  };
-
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "resetBtn"
-  }, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: function onClick() {
-      reset();
-    }
-  }, "reset"));
-}
-},{"react":"../node_modules/react/index.js"}],"../node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"../node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
 /** @license React v16.13.1
  * react-is.development.js
  *
@@ -32896,7 +32824,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var main = function main() {
+var Main = function Main() {
   var _useState = (0, _react.useState)({
     breakTime: 5,
     workTime: 25,
@@ -32945,42 +32873,15 @@ var main = function main() {
   }));
 };
 
-var _default = main;
+var _default = Main;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./pomodoro.js":"pomodoro.js","./breakInterval":"breakInterval.js","./workInterval":"workInterval.js","./reset":"reset.js","./modal":"modal.js","./repeatBreak":"repeatBreak.js"}],"app.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./pomodoro.js":"pomodoro.js","./breakInterval":"breakInterval.js","./workInterval":"workInterval.js","./reset":"reset.js","./modal":"modal.js","./repeatBreak":"repeatBreak.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
-var _react = _interopRequireDefault(require("react"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
-require("./css/style.css");
-
-var _main = _interopRequireDefault(require("./main"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//can also link css in html;
-var App = function App() {
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "App"
-  }, /*#__PURE__*/_react.default.createElement(_main.default, null));
-};
-
-_reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById('root'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./css/style.css":"css/style.css","./main":"main.js"}],"index.js":[function(require,module,exports) {
-"use strict";
-
-var _react = _interopRequireDefault(require("react"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
-require("./app.js");
+require("./main.js");
 
 require("./pomodoro.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./app.js":"app.js","./pomodoro.js":"pomodoro.js"}],"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./main.js":"main.js","./pomodoro.js":"pomodoro.js"}],"../../../.npm-global/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -33008,7 +32909,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34521" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42173" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
+import Reset from "./reset";
+
 
 
 export default function Pomodoro({setState, state}){
@@ -84,8 +86,9 @@ export default function Pomodoro({setState, state}){
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
-    return <div className="pomodoro">
-    <div className="message">
+    return <div className="row d-flex justify-content-center">
+    <div className="pomodoro col-12">
+    <div className="message my-3">
         {displayMessage ?  <div> Break Time</div>: <div> Working Time</div>}
         <audio
             id="beep"
@@ -97,12 +100,12 @@ export default function Pomodoro({setState, state}){
     <div className="timer">
         {timerMinutes}:{timerSeconds}
     </div>
-
-    <div>
-        <button onClick={timer}>start</button>
-        <button onClick={()=>setpauseBtn(true)}>pause</button>
+    <div className="btns ">
+        <button className="btnnn mx-3" onClick={timer}>start</button>
+        <button className="btnnn mx-3" onClick={()=>setpauseBtn(true)}>pause</button>    
+        <Reset  setState={(newState)=>setState(newState)} state={state}/>
     </div>
-
+    </div>
     </div>
     }
 

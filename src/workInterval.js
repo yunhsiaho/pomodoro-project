@@ -25,14 +25,15 @@ export default function WorkInterval({setState, state}){
     }
 
     return(
-        <div className="workInterval">
+        <div className="workInterval interval col-4">
             <h1>{name}</h1>
-            <div className="btnSet">
-            <button className="button" onClick={decreNum}>-</button>
-            <p>{workTime}</p>
-            <button className="button" onClick={increNum}>+</button>
+            <div className="row d-flex justify-content-center">
+                <button className="button col-2 m-1" onClick={decreNum}>-</button>
+                <p className="col-6 m-1">{workTime}</p>
+                <button className="button col-2 m-1" onClick={increNum}>+</button>
             </div>
         </div>
+
     );
 }
 

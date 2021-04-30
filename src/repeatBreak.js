@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 export default function RepeatBreak({setState, state}){
-    const name = "Repeat Session";
+    const name = "Repeat";
     const {repeatBreak} = state;
     const decreNum = ()=>{
         if(repeatBreak>1){
@@ -24,12 +24,12 @@ export default function RepeatBreak({setState, state}){
     }
 
     return(
-        <div className="repeatBreak">
+        <div className="repeatBreak interval col-4">
             <h1>{name}</h1>    
-            <div className="btnSet">
-            <button className="button" onClick={decreNum}>-</button>
-            <p>{repeatBreak}</p>
-            <button className="button" onClick={increNum}>+</button>
+            <div className="row d-flex justify-content-center">
+            <button className="button col-2 m-1" onClick={decreNum}>-</button>
+            <p className="col-6 m-1">{repeatBreak}</p>
+            <button className="button col-2 m-1" onClick={increNum}>+</button>
             </div>
         </div>
     );

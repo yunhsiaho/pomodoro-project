@@ -16,6 +16,6 @@ export default function Reset({setState, state}){
         })
     }
     return <div className="resetBtn">
-        <button  onClick={()=>{reset()}}>reset</button>
+        <button className="btnnn mx-3" onClick={()=>{reset()}}>reset</button>
     </div>
 }

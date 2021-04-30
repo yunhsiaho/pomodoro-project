@@ -1,0 +1,41 @@
+{
+  "name": "pomodoro",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --watch src/scss --output src/css --sourse-map true",
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html --public-url ./"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "node-sass": "^5.0.0",
+    "prettier": "^2.2.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
+    "react-dom": "^17.0.2",
+    "react-modal": "^3.13.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yunhsiaho/pomodoro-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yunhsiaho/pomodoro-project/issues"
+  },
+  "homepage": "https://github.com/yunhsiaho/pomodoro-project#readme",
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.0",
+    "@babel/preset-react": "^7.13.13",
+    "babel-plugin-react-transform": "^2.0.0-beta1",
+    "cssnano": "^5.0.2",
+    "parcel-bundler": "^1.12.5",
+    "postcss": "^8.2.13"
+  }
+}
